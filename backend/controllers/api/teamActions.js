@@ -1,31 +1,12 @@
-const { options, api_v } = require('../../config')
+const { options, api_v } = require('../../config');
 const https = require('https');
-let response = {};
 
-class matchActions {
-    //List of LIVE matches
-    getLiveMatches(req, res) {
-        options.path = `${api_v}/matches?status=LIVE`;
-        try {
-            https.get(options, resHttps => {
-                resHttps.on('data', data => {
-                    response += data;
-                })
-                resHttps.on('end', () => {
-                    res.status(200).send(response);
-                });
-            }).on('error', error => {
-                throw new Error(error);
-            });
-        } catch (err) {
-            return res.status(err.status).json({ message: err.message });
-        }
-    }
-
-    //Show one particular match.
-    getSingleMatch(req, res) {
+class teamActions {
+    //Show one particular team.
+    getTeam(req, res) {
         const id = req.params.id;
-        options.path = `${api_v}/matches/${id}`;
+        options.path = `/${api_v}/teams/${id}`;
+        let response = {};
         try {
             https.get(options, resHttps => {
                 resHttps.on('data', data => {
@@ -42,10 +23,11 @@ class matchActions {
         }
     }
 
-    //	Show all matches for a particular player.
-    getSinglePlayerMatches(req, res) {
+    //List one particular area.
+    getArea(req, res) {
         const id = req.params.id;
-        options.path = `${api_v}/players/${id}/matches`;
+        options.path = `/${api_v}/areas/${id}`;
+        let response = {};
         try {
             https.get(options, resHttps => {
                 resHttps.on('data', data => {
@@ -61,6 +43,28 @@ class matchActions {
             return res.status(err.status).json({ message: err.message });
         }
     }
+
+    //List one particular player.
+    getPlayer(req, res) {
+        const id = req.params.id;
+        options.path = `/${api_v}/players/${id}`;
+        let response = {};
+        try {
+            https.get(options, resHttps => {
+                resHttps.on('data', data => {
+                    response += data;
+                })
+                resHttps.on('end', () => {
+                    res.status(200).send(response);
+                });
+            }).on('error', error => {
+                throw new Error(error);
+            });
+        } catch (err) {
+            return res.status(err.status).json({ message: err.message });
+        }
+    }
+
 }
 
-module.exports = new matchActions();
+module.exports = new teamActions();
