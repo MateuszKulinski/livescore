@@ -5,6 +5,7 @@ let response = {};
 class competitionsActions {
     //List goal scorers for a particular competition.
     getScores(req, res) {
+        //id League
         const id = req.params.id;
         options.path = `${api_v}/competetions/${id}/scores`;
         try {
@@ -44,6 +45,7 @@ class competitionsActions {
 
     //Show Standings for a particular competition.
     getStandings(req, res) {
+        //id League
         const id = req.params.id;
         options.path = `${api_v}/competitions/${id}/standings`;
         try {
@@ -64,6 +66,7 @@ class competitionsActions {
 
     //List all matches for a particular competition.
     getMatches(req, res) {
+        //id League
         const id = req.params.id;
         options.path = `${api_v}/competitions/${id}/matches`;
         try {

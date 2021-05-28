@@ -4,6 +4,7 @@ const https = require('https');
 class teamActions {
     //Show one particular team.
     getTeam(req, res) {
+        //id Team
         const id = req.params.id;
         options.path = `/${api_v}/teams/${id}`;
         let response = {};
@@ -25,6 +26,7 @@ class teamActions {
 
     //List one particular area.
     getArea(req, res) {
+        //id Area
         const id = req.params.id;
         options.path = `/${api_v}/areas/${id}`;
         let response = {};
@@ -46,6 +48,7 @@ class teamActions {
 
     //List one particular player.
     getPlayer(req, res) {
+        //id Player
         const id = req.params.id;
         options.path = `/${api_v}/players/${id}`;
         let response = {};

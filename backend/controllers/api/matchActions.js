@@ -24,6 +24,7 @@ class matchActions {
 
     //Show one particular match.
     getSingleMatch(req, res) {
+        //id match
         const id = req.params.id;
         options.path = `${api_v}/matches/${id}`;
         try {
@@ -42,8 +43,9 @@ class matchActions {
         }
     }
 
-    //	Show all matches for a particular player.
+    //Show all matches for a particular player.
     getSinglePlayerMatches(req, res) {
+        //id player
         const id = req.params.id;
         options.path = `${api_v}/players/${id}/matches`;
         try {
