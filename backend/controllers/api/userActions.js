@@ -22,7 +22,7 @@ class UserActions {
     }
     async signIn(req, res) {
         const { email, userPassword } = req.body;
-        let userPasswordHash = salt + userPassword;
+        const userPasswordHash = salt + userPassword;
         const user = await User.findOne({ email: email });
         console.log(user);
         if (user == null) {
