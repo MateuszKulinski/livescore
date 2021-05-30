@@ -10,6 +10,7 @@ router.post('/signup', userActions.signUp);
 router.post('/signin', userActions.signIn);
 
 router.get('/matches', matchActions.getLiveMatches);
+router.get('/matches/today', matchActions.getDayMatches);
 router.get('/matches/:id', matchActions.getSingleMatch);
 router.get('/matches/players/:id', matchActions.getSinglePlayerMatches);
 

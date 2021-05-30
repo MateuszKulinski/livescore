@@ -1,8 +1,10 @@
-import React,{ useState } from "react";
+import React from "react";
 
 function Home(props){ 
   return (
-    <div className="homePage"></div>
+    <div className="homePage">
+      Brak meczów w trakcie gry.
+    </div>
   );
 }
 
