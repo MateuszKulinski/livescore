@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const userActions = require('../controllers/api/userActions');
 const matchActions = require('../controllers/api/matchActions');
 const teamActions = require('../controllers/api/teamActions');
 const competitionsActions = require('../controllers/api/competitionsActions');
+
+router.post('/signup', userActions.signUp);
+router.post('/signin', userActions.signIn);
 
 router.get('/matches', matchActions.getLiveMatches);
 router.get('/matches/:id', matchActions.getSingleMatch);

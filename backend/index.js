@@ -5,6 +5,8 @@ const apiRouter = require('./routes/api');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+require('./db/mongoose');
+
 app.use(bodyParser.json());
 
 app.use(cors());
