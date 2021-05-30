@@ -1,19 +1,20 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 
-export default class Nav extends Component{
-  render(){
-    return(
-      <nav className="navbar navbar-expand navbar-light fixed-top">
-        <div className="container">
-          <a href="#" className="navbar-brand">Home</a>
-          <div className="collapse navbar-collapse">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item"><a href="#" className="nav-link">Zaloguj</a></li>
-              <li className="nav-item"><a href="#" className="nav-link">Zarejestruj</a></li>
-            </ul>
-          </div>
+function Nav(props){ 
+  return(
+    <nav className="navbar navbar-expand navbar-light fixed-top">
+      <div className="container">
+        <a href="/#" className="navbar-brand">Home</a>
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item"><a href="/#" className="nav-link">Zaloguj</a></li>
+            <li className="nav-item"><a href="/#" className="nav-link">Zarejestruj</a></li>
+          </ul>
         </div>
-      </nav>
-    )
-  }
+      </div>
+    </nav>
+  )
 }
+
+
+export default Nav;
