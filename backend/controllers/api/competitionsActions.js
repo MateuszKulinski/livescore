@@ -1,52 +1,68 @@
-const { axiosOptions, api_v, hostUrl, options } = require('../../config');
+const {
+    axiosOptions,
+    api_v,
+    hostUrl,
+} = require('../../config');
 const axios = require('axios');
 
-class competitionsActions {
-    //List goal scorers for a particular competition.
-    async getScores(req, res) {
-        const id = req.params.id;
-        let value = await axios.get(`${hostUrl}${api_v}/competetions/${id}/scores`, axiosOptions)
-            .catch((error) => {
-                return res.status(error.status).json({ message: error.message });
+module.exports = {
+    getScores: async (req, res) => {
+        try {
+            const id = req.params.id;
+            const value = await axios.get(`${hostUrl}${api_v}/competetions/${id}/scores`, axiosOptions);
+            res.status(200).send(value.data);
+        } catch (error) {
+            res.status(error.response.status).json({
+                message: error.response.message
             });
-        res.status(200).send(value.data);
-    }
+        }
+    },
     //List one particular competition.
-    async getAllCompetitions(req, res) {
-        let value = await axios.get(`${hostUrl}${api_v}/competetions/2000`, axiosOptions)
-            .catch((error) => {
-                return res.status(error.status).json({ message: error.message });
+    getAllCompetitions: async (req, res) => {
+        try {
+            const value = await axios.get(`${hostUrl}${api_v}/competetions/2000`, axiosOptions);
+            res.status(200).send(value.data);
+        } catch (error) {
+            res.status(error.response.status).json({
+                message: error.response.message
             });
-        res.status(200).send(value.data);
-    }
+        }
+    },
     //Show Standings for a particular competition.
-    async getStandings(req, res) {
-        //id League
-        const id = req.params.id;
-        let value = await axios.get(`${hostUrl}${api_v}/competitions/${id}/standings`, axiosOptions)
-            .catch((error) => {
-                return res.status(error.status).json({ message: error.message });
+    getStandings: async (req, res) => {
+        try {
+            //id League
+            const id = req.params.id;
+            const value = await axios.get(`${hostUrl}${api_v}/competitions/${id}/standings`, axiosOptions);
+            res.status(200).send(value.data);
+        } catch (error) {
+            res.status(error.response.status).json({
+                message: error.response.message
             });
-        res.status(200).send(value.data);
-    }
+        }
+    },
     //List all matches for a particular competition.
-    async getMatches(req, res){
+    getMatches: async (req, res) => {
         //id League
-        const id = req.param.id;
-        let value = await axios.get(`${hostUrl}${api_v}/competitions/${id}/matches`)
-            .catch((error) => {
-                return res.status(error.status).json({ message: error.message });
+        try {
+            const id = req.param.id;
+            const value = await axios.get(`${hostUrl}${api_v}/competitions/${id}/matches`)
+            res.status(200).send(value.data);
+        } catch (error) {
+            res.status(error.response.status).json({
+                message: error.response.message
             });
-        res.status(200).send(value.data);
-    }
-    async getTeamCompetitions(req, res){
-        let id = req.param.id;
-        let value = await axios.get(`${hostUrl}${api_v}/competitions/${id}/teams`)
-            .catch((error) => {
-                return res.status(error.status).json({ message: error.message });
+        }
+    },
+    getTeamCompetitions: async (req, res) => {
+        try {
+            const id = req.param.id;
+            const value = await axios.get(`${hostUrl}${api_v}/competitions/${id}/teams`);
+            res.status(200).send(value.data);
+        } catch (error) {
+            res.status(error.response.status).json({
+                message: error.response.message
             });
-        res.status(200).send(value.data);
-    }
+        }
+    },
 }
-
-module.exports = new competitionsActions();

@@ -11,11 +11,6 @@ module.exports = {
     api_v: `/${api_v}`,
     hostUrl: hostUrl,
     salt: salt,
-    options: {
-        host: hostUrl,
-        dataType: 'json',
-        headers: { 'X-Auth-Token': token },
-    },
     axiosOptions: {
         headers: {
             'X-Auth-Token': token,
