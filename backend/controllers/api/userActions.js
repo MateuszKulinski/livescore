@@ -13,7 +13,6 @@ class UserActions {
             userPassword: userPasswordHash,
         });
         try {
-            await
             await signedUpUser.save();
         } catch (err) {
             return res.status(422).json({ message: err.message });

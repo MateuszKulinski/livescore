@@ -5,9 +5,12 @@ import Login from './login.component';
 import Register from './register.component';
 import Modal from 'react-modal';
 import axios from '../axios';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css'
-
+import DatePicker from "react-datepicker";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { registerLocale, setDefaultLocale } from  "react-datepicker";
+import pl from 'date-fns/locale/pl';
+registerLocale('pl', pl)
 
 class Main extends React.Component{
   constructor(props){
@@ -17,6 +20,7 @@ class Main extends React.Component{
       showSignInState: false,
       showSignUpState: false,
       showMatches: false,
+      date: new Date(),
     };
   }
   componentDidMount(){
@@ -25,7 +29,6 @@ class Main extends React.Component{
   async loadTodayMatch(){
     try{
       const res = await axios.get('matches/today');
-      console.log(res);
       const matches = res.data;
       this.setState({ matches });
       if(matches.count){
@@ -59,7 +62,7 @@ class Main extends React.Component{
     return(
       <div id="App">
         <NotificationContainer/>
-      <div className="ModalContainer">        
+      <div className="ModalContainer">      
       <Modal
         appElement={document.getElementById('ModalContainer')}
         className="custom-modal"
@@ -67,7 +70,7 @@ class Main extends React.Component{
         onRequestClose={() =>  this.setState({showSignInState: false})} 
         contentLabel="Zaloguj">
         <Login
-        signInClick={()=>this.signInClick()}/>
+        signInClick={this.signInClick}/>
       </Modal>
       <Modal
         appElement={document.getElementById('ModalContainer')}
@@ -76,13 +79,19 @@ class Main extends React.Component{
         onRequestClose={() =>  this.setState({signUpShowModal: false})} 
         contentLabel="Zarejestruj">
         <Register
-        signUpClick={()=>this.signUpClick()}/>
+        signUpClick={this.signUpClick}/>
       </Modal>
       </div>
       <Nav
           signInShowModal={user=>this.signInShowModal(user)}
           signUpShowModal={user=>this.signUpShowModal(user)}/>
         <div className="auth-wrapper">
+          <div className="datapicker-container">
+            <DatePicker
+              selected={this.state.date}
+              locale="pl"
+            /> 
+          </div>
           <div className="auth-inner">
             {this.state.showMatches ? (null) : (<Home/>)}
           </div>

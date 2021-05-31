@@ -1,5 +1,4 @@
-const { axiosOptions, options, api_v, hostUrl } = require('../../config');
-const https = require('https');
+const { axiosOptions, api_v, hostUrl } = require('../../config');
 const axios = require('axios');
 
 class teamActions {
@@ -7,58 +6,31 @@ class teamActions {
     async getTeam(req, res) {
         //id Team
         const id = req.params.id;
-        await axios.get(`${hostUrl}${api_v}/teams/${id}`, axiosOptions)
-            .then((value) => {
-                res.status(200).send(value.data);
-            }).catch((error) => {
-                res.status(error.status).json({ message: error.message });
+        let value = await axios.get(`${hostUrl}${api_v}/teams/${id}`, axiosOptions)
+            .catch((error) => {
+                return res.status(error.status).json({ message: error.message });
             });
+        res.status(200).send(value.data);
     }
-
-    //List one particular area.
-    getArea(req, res) {
-        //id Area
+    //get one particular area
+    async getArea(req, res) {
+        //id Team
         const id = req.params.id;
-        options.path = `/${api_v}/areas/${id}`;
-        let response = {};
-        try {
-            https.get(options, resHttps => {
-                resHttps.on('data', data => {
-                    response += data;
-                })
-                resHttps.on('end', () => {
-                    res.status(200).send(response);
-                });
-            }).on('error', error => {
-                throw new Error(error);
-            });
-        } catch (err) {
-            return res.status(err.status).json({ message: err.message });
-        }
+        let value = await axios.get(`${hostUrl}${api_v}/areas/${id}`, axiosOptions)
+            .catch((error) => {
+                return res.status(error.status).json({ message: error.message });
+            });            
+        res.status(200).send(value.data);
     }
-
     //List one particular player.
-    getPlayer(req, res) {
-        //id Player
+    async getPlayer(req, res){
         const id = req.params.id;
-        options.path = `/${api_v}/players/${id}`;
-        let response = {};
-        try {
-            https.get(options, resHttps => {
-                resHttps.on('data', data => {
-                    response += data;
-                })
-                resHttps.on('end', () => {
-                    res.status(200).send(response);
-                });
-            }).on('error', error => {
-                throw new Error(error);
-            });
-        } catch (err) {
-            return res.status(err.status).json({ message: err.message });
-        }
+        let value = await axios.get(`${hostUrl}${api_v}/players/${id}`, axiosOptions)
+            .catch((error) => {
+                return res.status(error.status).json({ message: error.message });
+            });            
+        res.status(200).send(value.data);
     }
-
 }
 
 module.exports = new teamActions();
