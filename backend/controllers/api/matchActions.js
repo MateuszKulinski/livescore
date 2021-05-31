@@ -1,9 +1,9 @@
 const { axiosOptions, api_v, hostUrl } = require('../../config');
 const axios = require('axios');
 
-module.export = {
+module.export = async function matchActions (req,res){
 //List of live matches
-    getLiveMatches: async(req, res) =>  {
+    getLiveMatches = async(req, res) =>  {
         //id Team
         let value = await axios.get(`${hostUrl}${api_v}/matches?status=LIVE`, axiosOptions)
             .catch((error) => {
@@ -12,7 +12,7 @@ module.export = {
         res.status(200).send(value.data);
     },
     //List of today matches
-    getLiveMatches: async(req, res) =>  {
+    getLiveMatches = async(req, res) =>  {
         //id Team
         const formatYmd = date => date.toISOString().slice(0, 10);
         let date = formatYmd(new Date());
@@ -23,7 +23,7 @@ module.export = {
         res.status(200).send(value.data);
     },
     //Show one particular match.
-    getSingleMatch: async(req, res) => {
+    getSingleMatch = async(req, res) => {
         //id match
         const id = req.params.id;
         let value = await axios.get(`${hostUrl}${api_v}/matches/${id}`, axiosOptions)
@@ -33,7 +33,7 @@ module.export = {
         res.status(200).send(value.data);
     },
     //Show all matches for a particular player.
-    getSinglePlayerMatches: async(req, res) => {
+    getSinglePlayerMatches = async(req, res) => {
         //id match
         const id = req.params.id;
         let value = await axios.get(`${hostUrl}${api_v}/players/${id}/matches`, axiosOptions)
