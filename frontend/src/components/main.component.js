@@ -92,13 +92,14 @@ function Main(props){
           signUpShowModal={user=>signUpShowModal(user)}/>
         <div className="auth-wrapper">
           <div className="datapicker-container">
-            <DatePicker
+            
+          </div>
+          <div className="auth-inner">
+          <DatePicker
               selected={date}
               locale="pl"
               onChange={date => loadTodayMatch(date)}
             /> 
-          </div>
-          <div className="auth-inner">
             {showMatches ? (matches.map(match=>(
               <Match
                 key={match.id}
