@@ -6,6 +6,7 @@ const {
 
 module.exports = {
     signUp: async (req, res) => {
+        console.log(req);
         const {
             userName,
             email,
