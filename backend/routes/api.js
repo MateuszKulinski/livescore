@@ -8,6 +8,8 @@ const competitionsActions = require('../controllers/api/competitionsActions');
 
 router.post('/signup', userActions.signUp);
 router.post('/signin', userActions.signIn);
+router.get('/email/:email', userActions.email);
+router.get('/userName/:userName', userActions.userName);
 
 router.get('/matches', matchActions.getLiveMatches);
 router.get('/matches/today/:date', matchActions.getDateMatches);
