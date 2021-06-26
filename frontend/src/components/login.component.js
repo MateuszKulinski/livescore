@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import './../assets/modal.scss';
-import { validationRegister } from './../classes/tools';
+import { Tools } from './../classes/tools';
+import Errors from './errors.component';
 
 function Login(props) {
   const [email, setEmail] = useState(props.email);
   const [password, setPassword] = useState(props.password);
+  const [errors, setErrors] = useState("");
 
   const changeEmailHandler = event => {
     const value = event.target.value;
@@ -14,17 +16,23 @@ function Login(props) {
     const value = event.target.value;
     setPassword(value);
   }
+  const changeErrorsHandler = errors => {
+    const value = errors;
+    console.log(errors);
+    setErrors(value);
+  }
 
-  const signInClick = () => {
+  const signInClick = async () => {
     const user = {
       email: email,
       password: password,
     }
-    const errors = validationRegister(user);
-    if (!errors.length) {
+    await Tools.validationLogin(user).then(function (result) {
+      changeErrorsHandler(result);
+    });
+
+    if (errors.length === 0) {
       props.signInClick(user);
-    } else {
-      console.log(errors);
     }
   }
   return (
@@ -32,6 +40,9 @@ function Login(props) {
       <label>Zaloguj</label>
       <input type="text" name="email" placeholder="E-mail" onChange={changeEmailHandler}></input>
       <input type="text" name="userPassword" placeholder="Hasło" onChange={changePasswordHandler}></input>
+      {errors.length ? <Errors
+        errors={errors}
+      /> : ""}
       <button
         onClick={signInClick}
       >Zaloguj</button>

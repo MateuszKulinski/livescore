@@ -61,7 +61,9 @@ function Main(props) {
   const signUpClick = async (user) => {
     try {
       const res = await axios.post(`signup`, user);
-      console.log(res);
+      if (res.status === 201) {
+        setShowSignUpState(false);
+      }
     } catch (err) {
       NotificationManager.error(err.response.data.message);
     }
