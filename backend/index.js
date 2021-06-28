@@ -2,10 +2,13 @@ const express = require('express');
 const app = express();
 const {
     port
-} = require('./config');
+} = require('./config/config');
 const apiRouter = require('./routes/api');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const passport = require('./config/local');
+
+passport;
 
 require('./db/mongoose');
 

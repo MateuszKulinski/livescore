@@ -2,7 +2,7 @@ const {
     axiosOptions,
     api_v,
     hostUrl
-} = require('../../config');
+} = require('./../../config/config');
 const axios = require('axios');
 
 module.exports = {

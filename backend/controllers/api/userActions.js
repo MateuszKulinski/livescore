@@ -1,8 +1,7 @@
 const User = require('../../db/models/user');
 const bcrypt = require('bcrypt');
-const {
-    salt
-} = require('../../config');
+const jwt = require('jsonwebtoken');
+const { salt } = require('./../../config/config');
 
 module.exports = {
     email: async (req, res) => {
@@ -32,50 +31,31 @@ module.exports = {
         }
     },
     signUp: async (req, res) => {
+        console.log(req.body);
         const {
             userName,
             email,
             userPassword
         } = req.body;
-        const userPasswordHash = await bcrypt.hash(salt + userPassword, 10);
         const signedUpUser = new User({
             userName,
-            email,
-            userPassword: userPasswordHash,
+            email
         });
+
         try {
-            await signedUpUser.save();
+            await User.register(signedUpUser, userPassword);
         } catch (err) {
             return res.status(422).json({
                 message: err.message
             });
         }
-        res.status(201).json(signedUpUser);
+        res.status(201).send("User created");
     },
     signIn: async (req, res) => {
-        const {
-            email,
-            userPassword
-        } = req.body;
-        const userPasswordHash = salt + userPassword;
-        const user = await User.findOne({
-            email: email
-        });
-        console.log(user);
-        if (user == null) {
-            return res.status(400).send('Cannot find user');
-        }
-        try {
-            if (await bcrypt.compare(userPasswordHash, user.userPassword)) {
-                res.status(200).send(user);
-            } else {
-                res.status(401).send('Wrong password');
-            }
-        } catch (err) {
-            res.status(404).send({
-                message: 'HashError'
-            });
-        }
+        const token = jwt.sign({ id: req.user._id }, salt, { expiresIn: 300 });
+        return res.send({
+            token,
+        })
     }
 
 }

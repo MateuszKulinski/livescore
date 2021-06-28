@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const userActions = require('../controllers/api/userActions');
 const matchActions = require('../controllers/api/matchActions');
@@ -7,7 +8,7 @@ const teamActions = require('../controllers/api/teamActions');
 const competitionsActions = require('../controllers/api/competitionsActions');
 
 router.post('/signup', userActions.signUp);
-router.post('/signin', userActions.signIn);
+router.post('/signin', passport.authenticate('local', { session: false }), userActions.signIn);
 router.get('/email/:email', userActions.email);
 router.get('/userName/:userName', userActions.userName);
 
