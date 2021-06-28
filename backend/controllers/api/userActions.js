@@ -35,7 +35,7 @@ module.exports = {
         const {
             userName,
             email,
-            userPassword
+            password
         } = req.body;
         const signedUpUser = new User({
             userName,
@@ -43,7 +43,7 @@ module.exports = {
         });
 
         try {
-            await User.register(signedUpUser, userPassword);
+            await User.register(signedUpUser, password);
         } catch (err) {
             return res.status(422).json({
                 message: err.message

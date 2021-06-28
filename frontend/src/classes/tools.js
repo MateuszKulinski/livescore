@@ -65,14 +65,13 @@ export class Tools {
     if (password === undefined) {
       return "Wprowadź hasło";
     }
-    if (rePassword === undefined) {
-      return "Powtórz hasło";
-    }
-    if (!(rePassword === password)) {
-      return "Hasła są różne";
-    }
-    if (type == 'login') {
-      //SPRAWDZIĆ LOGIN W BAZIE
+    if (type == "register") {
+      if (rePassword === undefined) {
+        return "Powtórz hasło";
+      }
+      if (!(rePassword === password)) {
+        return "Hasła są różne";
+      }
     }
   }
 };

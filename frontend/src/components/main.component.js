@@ -50,7 +50,14 @@ function Main(props) {
     setShowSignUpState(!showSignUpState);
   }
   const signInClick = async (user) => {
-    console.log("signInClick");
+    try {
+      const res = await axios.post(`signin`, user);
+      if (res.status === 201) {
+        setShowSignInState(false);
+      }
+    } catch (err) {
+      NotificationManager.error(err.response.data.message);
+    }
     console.log(user);
     try {
 
