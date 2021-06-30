@@ -7,7 +7,7 @@ module.exports = {
     email: async (req, res) => {
         const email = req.params.email;
         try {
-            user = await User.findOne({ email: email });
+            const user = await User.findOne({ email: email });
             if (user === null) {
                 res.status(200).send("User not exist");
             } else {
@@ -20,7 +20,7 @@ module.exports = {
     userName: async (req, res) => {
         const userName = req.params.userName;
         try {
-            user = await User.findOne({ userName: userName });
+            const user = await User.findOne({ userName: userName });
             if (user === null) {
                 res.status(200).send("User not exist");
             } else {
@@ -53,9 +53,10 @@ module.exports = {
     },
     signIn: async (req, res) => {
         const token = jwt.sign({ id: req.user._id }, salt, { expiresIn: 300 });
+        const user = await User.findOne({ _id: req.user._id });
         return res.send({
             token,
+            user,
         })
-    }
-
+    },
 }
