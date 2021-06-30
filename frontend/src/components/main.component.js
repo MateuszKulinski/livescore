@@ -13,6 +13,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { registerLocale, setDefaultLocale } from "react-datepicker";
 import pl from 'date-fns/locale/pl';
 import { format } from "date-fns";
+import authService from "./../services/auth.service";
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+
 registerLocale('pl', pl)
 
 function Main(props) {
@@ -21,12 +24,15 @@ function Main(props) {
   const [showSignUpState, setShowSignUpState] = useState(false);
   const [showMatches, setShowMatches] = useState(false);
   const [date, setDate] = useState(new Date());
+  const [userApp, setUserApp] = useState(false);
 
   useEffect(async () => {
+    setUserApp(JSON.parse(localStorage.getItem('user')));
     loadTodayMatch(new Date());
   }, [])
 
   const loadTodayMatch = async (date) => {
+    console.log("A");
     const formattedDate = format(date, 'yyyy-MM-dd');
     setDate(date);
     try {
@@ -51,15 +57,16 @@ function Main(props) {
   }
   const signInClick = async (user) => {
     try {
-      const res = await axios.post(`signin`, user);
-      if (res.status === 201) {
-        setShowSignInState(false);
-      }
-    } catch (err) {
-      NotificationManager.error(err.response.data.message);
-    }
-    console.log(user);
-    try {
+      await authService.login(user)
+        .then((value) => {
+          if (localStorage.getItem('user') != false) {
+            setUserApp(localStorage.getItem('user'));
+            setShowSignInState(false);
+            window.location.reload();
+          } else {
+            return false;
+          }
+        });
 
     } catch (err) {
       NotificationManager.error(err.response.data.message);
@@ -67,14 +74,20 @@ function Main(props) {
   }
   const signUpClick = async (user) => {
     try {
-      const res = await axios.post(`signup`, user);
-      if (res.status === 201) {
+      const registerData = authService.register(user);
+      if (registerData.status === 200) {
         setShowSignUpState(false);
       }
     } catch (err) {
       NotificationManager.error(err.response.data.message);
     }
 
+  }
+  const addDate = days => {
+    let dateNew = new Date(date);
+    dateNew.setDate(date.getDate() + days);
+    loadTodayMatch(dateNew);
+    setDate(dateNew);
   }
   return (
     <div id="App">
@@ -102,6 +115,7 @@ function Main(props) {
         </Modal>
       </div>
       <Nav
+        userApp={userApp}
         signInShowModal={user => signInShowModal(user)}
         signUpShowModal={user => signUpShowModal(user)} />
       <div className="auth-wrapper">
@@ -109,11 +123,27 @@ function Main(props) {
 
         </div>
         <div className="auth-inner">
-          <DatePicker
-            selected={date}
-            locale="pl"
-            onChange={date => loadTodayMatch(date)}
-          />
+          <div className="datapicker-container">
+            <div className="svg-container —align-right">
+              <div className="__svg-btn __fill-white"
+                onClick={() => addDate(-1)}>
+                <FaArrowLeft>
+                </FaArrowLeft>
+              </div>
+            </div>
+            <DatePicker
+              selected={date}
+              locale="pl"
+              onChange={date => loadTodayMatch(date)}
+            />
+            <div className="svg-container">
+              <div className="__svg-btn __fill-white"
+                onClick={() => addDate(1)}>
+                <FaArrowRight>
+                </FaArrowRight>
+              </div>
+            </div>
+          </div>
           {showMatches ? (matches.map(match => (
             <Match
               key={match.id}
@@ -122,7 +152,7 @@ function Main(props) {
           ))) : (<Home />)}
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 

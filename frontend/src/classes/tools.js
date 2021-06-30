@@ -18,7 +18,6 @@ export class Tools {
     return array.filter(Boolean);
   }
   static async validationLogin(user) {
-    console.log(user);
     let array = [];
     for (const [key, value] of Object.entries(user)) {
       if (key === "email") {

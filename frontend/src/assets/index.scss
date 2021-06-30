@@ -6,6 +6,14 @@ $melon: #e0afa0ff;
 $bg-color: #808080;
 $dark-lava-opacity: #463f3a33;
 
+@mixin transition($transition: .5s) {
+  -webkit-transition: $transition all;
+  -moz-transition: $transition all;
+  -ms-transition: $transition all;
+  -o-transition: $transition all;
+  transition: $transition all;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
 *{
@@ -57,12 +65,43 @@ body, html, .App, #root, .auth-wrapper{
 .custom-control-label{
   font-weight: 400;
 }
-.datapicker-container{
-  margin: 20px auto;
-}
 .homePage{
   color: $melon;
 }
 .datapicker-container{
-  
+  display: inline-block;
+  width: 100%;
+}
+.react-datepicker-wrapper{
+  width: 50%;
+  text-align: center;
+  float: left;
+}
+.datapicker-container .svg-container{
+  width: 25%;
+  float: left;
+}
+
+.__svg-btn{
+  width: 29px;
+  height: 29px;
+  border: 1px solid $dark-lava;
+  background: $dark-lava;
+  text-align: center;
+  cursor: pointer;
+  @include transition($transition: .5s);
+}
+.__svg-btn:hover{
+  background: #fff;
+}
+.—align-right .__svg-btn{
+  margin-right: 0;
+  margin-left: auto;
+}
+.__fill-white svg{
+  fill: #fff;
+  @include transition($transition: .5s);
+}
+.__fill-white:hover svg{
+  fill: $dark-lava;
 }

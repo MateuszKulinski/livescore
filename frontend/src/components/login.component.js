@@ -18,7 +18,6 @@ function Login(props) {
   }
   const changeErrorsHandler = errors => {
     const value = errors;
-    console.log(errors);
     setErrors(value);
   }
 
@@ -32,7 +31,10 @@ function Login(props) {
     });
 
     if (errors.length === 0) {
-      props.signInClick(user);
+      props.signInClick(user).then((value) => {
+        console.log(value);
+        setErrors(['Błędny login lub hasło']);
+      });
     }
   }
   return (
